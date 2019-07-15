@@ -59,6 +59,7 @@ type:"TCP Speed Test"
 type:"traceroute"
 ```
 ## key
+it is the job idea
 Key has to be unique so as to easily map results to the experiment
 ```
 key:"some unique value"
