@@ -9,7 +9,6 @@ public class OrchServer {
             System.out.println("Server Started");
             while(true){
                 Socket clientSocket=serverSocket.accept();
-                System.out.println("a client connected\n");
                 Thread handler = new Thread(new RequestHandler(clientSocket));
                 handler.start();
             }
