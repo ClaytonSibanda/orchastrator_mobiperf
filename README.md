@@ -1,3 +1,4 @@
+
 # Orchestration Server
 
 **Format of the JSON The server should receive**
@@ -6,16 +7,16 @@
 {
 	request_type:string
 	job_description{
-					type:string  
-					key:string  
-					start_time:string  
-					end_time:string  
-					interval_sec:int  
-					count:long  
-					priority:long  
-					parameters:{
-						//depends on the measurement
-				    }
+			type:string  
+			key:string  
+			start_time:string  
+			end_time:string  
+			interval_sec:int  
+			count:long  
+			priority:long  
+			parameters:{
+			//depends on the measurement
+			}
 	per_day_count:int		    
 	}	 
 	user_id:string			
