@@ -5,16 +5,20 @@
 ```
 {
 	request_type:string
-	type:string  
-	key:string  
-	start_time:string  
-	end_time:string  
-	interval_sec:int  
-	count:long  
-	priority:long  
-	parameters:{
-		//depends on the measurement
-	}
+	job_description{
+					type:string  
+					key:string  
+					start_time:string  
+					end_time:string  
+					interval_sec:int  
+					count:long  
+					priority:long  
+					parameters:{
+						//depends on the measurement
+				    }
+	per_day_count:int		    
+	}	 
+	user_id:string			
 } 
 ```
 2) Querying tasks from Mobiperf
@@ -59,8 +63,7 @@ type:"TCP Speed Test"
 type:"traceroute"
 ```
 ## key
-it is the job idea
-Key has to be unique so as to easily map results to the experiment
+Key which is the job ID has to be unique so as to easily map results to the experiment
 ```
 key:"some unique value"
 ``` 
