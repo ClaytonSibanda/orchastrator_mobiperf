@@ -7,7 +7,7 @@
 {
 	request_type:string
 	job_description{
-            meaurement_description:{
+            measurement_description:{
                     type:string  
                     key:string  
                     start_time:string  
