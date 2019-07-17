@@ -13,7 +13,7 @@ public class Job {
     public Job (JSONObject jobDesc){
         requiredNodeCount =jobDesc.getInt("node_count");
         jobInterval=jobDesc.getInt("job_interval");//this will dictate if recurring or not
-        measurementDesc=jobDesc.getJSONObject("measurement_desc");
+        measurementDesc=jobDesc.getJSONObject("measurement_description");
         startTime=Utils.getDate(measurementDesc.getString("start_time"));
         endTime=Utils.getDate(measurementDesc.getString("end_time")); //this field wont change
         currentNodeCount = 0;

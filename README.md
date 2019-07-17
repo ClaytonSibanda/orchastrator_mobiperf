@@ -6,7 +6,7 @@
 ```
 {
 	request_type:string
-	job_description{
+	job_description:{
             measurement_description:{
                     type:string  
                     key:string  
