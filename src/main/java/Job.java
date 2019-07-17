@@ -8,7 +8,7 @@ public class Job {
     private Date nextReset;
     private int jobInterval; //in hrs
     private int requiredNodeCount;
-    private int currCount;
+    private int currentNodeCount;
 
     public Job (JSONObject jobDesc){
         requiredNodeCount =jobDesc.getInt("node_count");
@@ -16,13 +16,14 @@ public class Job {
         startTime=Utils.getDate(jobDesc.getString("start_time"));
         endTime=Utils.getDate(jobDesc.getString("end_time"));
         measurementDesc=jobDesc.getJSONObject("measurement_desc");
-        currCount=0;
+        currentNodeCount = 0;
         setNextResetTime();
         //TODO create nextReset
     }
 
     private void setNextResetTime(){
         //if not recurring creating a new next reset time is useless as wont use this field
+        //otherwise
         if(isRecurring()) {
             this.nextReset=Utils.addHours(startTime,jobInterval);
         }
@@ -40,24 +41,24 @@ public class Job {
     }
 
     public boolean nodesReached(){
-        return currCount == requiredNodeCount;
+        return currentNodeCount == requiredNodeCount;
     }
 
     public boolean isRecurring(){
         return jobInterval != 0;
     }
 
-    public void addCurrCount(){
-        int count=currCount+1;
+    public void addNodeCount(){
+        int count= currentNodeCount +1;
         if(count<=requiredNodeCount) {
-            this.currCount = count;
+            this.currentNodeCount = count;
         }
     }
 
-    public void decrementCurrCount(){
-        int count=currCount-1;
+    public void subtractNodeCount(){
+        int count= currentNodeCount -1;
         if(count>=0) {
-            this.currCount=count;
+            this.currentNodeCount =count;
         }
     }
 
@@ -93,7 +94,7 @@ public class Job {
 
     public void reset(){
         if(isRecurring()){
-            currCount=0;
+            currentNodeCount =0;
             startTime=nextReset;
             //this will create a new Date obj thus start and next wont be pointing to the same object
             //will use new start time(obtained from the prev reset time) and interval to create the next Reset time

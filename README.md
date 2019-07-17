@@ -19,7 +19,8 @@
                     //depends on the measurement
                     }
             }	
-	node_count:int		    
+	node_count:int
+	job_interval:int 		    
 	}	 
 	user_id:string			
 } 

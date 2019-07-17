@@ -1,9 +1,9 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-//this class will hold active jobs
+//this class will hold jobs
 public class Measurement{
    private static List<Job> activeJobs=new ArrayList<Job>();
 
@@ -11,35 +11,37 @@ public class Measurement{
             if(jobRequest==null) return false;
             //TODO there is need for error checking for valid jobRequest structure before addition
             JSONObject jobDesc = jobRequest.getJSONObject("job_description");
-            Job job=new Job(jobDesc);
-            activeJobs.add(job);
+            Job jobTobeScheduled=new Job(jobDesc);
+            activeJobs.add(jobTobeScheduled);
             return true;
         }
 
     public static JSONArray getActiveJobs() {
-            //TODO need to add logic for this based on attr such as how many times its already run today
             JSONArray sentJobs=new JSONArray();
-            for(Job job:activeJobs){
-                if(job.getCurrCount()<=job.getCountPerDay()){
+            Date currentTime=new Date();
+            for(Job job:activeJobs) {
+                if(job.canStart(currentTime)&&!job.nodesReached()){
                     sentJobs.put(job.getMeasurementDesc());
+                    job.addNodeCount();
                 }
             }
             return sentJobs;
     }
 
-    public static void recordSuccessfulJob(JSONObject jobDesc){
-         //assuming the JsonObj has id field only
+    public static void recordfailedJob(JSONObject jobDesc){
+         //assuming the JsonObj has key field mapping which measurement failed
+        //TODO mellar needs to provide me with this info
          String key=jobDesc.getString("key");
          for(Job job:activeJobs){
              String currKey=(String)job.getMeasurementDesc().get("key");
              if(currKey.equals(key)){
-                 job.addCurrCount();
+                 job.subtractNodeCount();
                  break;
              }
          }
     }
 
-
-
-
+    public static List<Job> getJobs(){
+        return activeJobs;
+    }
 }
