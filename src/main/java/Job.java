@@ -13,9 +13,9 @@ public class Job {
     public Job (JSONObject jobDesc){
         requiredNodeCount =jobDesc.getInt("node_count");
         jobInterval=jobDesc.getInt("job_interval");//this will dictate if recurring or not
-        startTime=Utils.getDate(jobDesc.getString("start_time"));
-        endTime=Utils.getDate(jobDesc.getString("end_time"));
         measurementDesc=jobDesc.getJSONObject("measurement_desc");
+        startTime=Utils.getDate(measurementDesc.getString("start_time"));
+        endTime=Utils.getDate(measurementDesc.getString("end_time")); //this field wont change
         currentNodeCount = 0;
         setNextResetTime();
         //TODO create nextReset
@@ -49,20 +49,20 @@ public class Job {
     }
 
     public void addNodeCount(){
-        int count= currentNodeCount +1;
-        if(count<=requiredNodeCount) {
+        int count= currentNodeCount + 1;
+        if(count <= requiredNodeCount) {
             this.currentNodeCount = count;
         }
     }
 
     public void subtractNodeCount(){
-        int count= currentNodeCount -1;
-        if(count>=0) {
+        int count= currentNodeCount - 1;
+        if(count >= 0) {
             this.currentNodeCount =count;
         }
     }
 
-    public boolean jobElapsed(){
+    private boolean jobElapsed(){
         Date presentTime = new Date(); //either create once or all the time when checking
         return presentTime.after(endTime);
     }
