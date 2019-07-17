@@ -19,7 +19,7 @@
                     //depends on the measurement
                     }
             }	
-	per_day_count:int		    
+	node_count:int		    
 	}	 
 	user_id:string			
 } 
