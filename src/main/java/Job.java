@@ -31,6 +31,8 @@ public class Job {
     //get job with the right parameters in the measurement desc
     public JSONObject getMeasurementDesc() {
         measurementDesc.put("start_time",Utils.formatDate(startTime));
+        //this can(needs to) be changed just need to be discussed as the end time might still be too far
+        // although the phone will have been done with it  most likely
         measurementDesc.put("end_time",Utils.formatDate(nextReset));
         //TODO will have to alter the priority based on the interval
         return measurementDesc;
@@ -79,17 +81,13 @@ public class Job {
 
     public boolean isResettable(){
      if(!isRecurring()) return false; //if the job does not need to be repeated then doesnt need to be reset
-     else{
-         if (nodesReached()){  //if it is recurring and the node count is reached reset
-             return true;
-         }
-         if(nextReset.after(startTime)){
-             //if the next reset time is reached then reset the time and nodes (might need to change TODO ASK JOSIAH)
-             // and wait for the next repetition of the job
-             return true;
-         }
+
+         //if it is recurring and the node count is reached reset
+         //if the next reset time is reached then reset the time and nodes (might need to change TODO ASK JOSIAH)
+         // and wait for the next repetition of the job
+     else {
+         return nodesReached()|| nextReset.after(startTime);
      }
-     return false;
     }
 
     public void reset(){

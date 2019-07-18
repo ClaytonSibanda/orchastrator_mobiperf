@@ -22,20 +22,20 @@ public class Measurement{
             for(Job job:activeJobs) {
                 if(job.canStart(currentTime)&&!job.nodesReached()){
                     sentJobs.put(job.getMeasurementDesc());
-                    job.addNodeCount();
                 }
             }
             return sentJobs;
     }
-
-    public static void recordfailedJob(JSONObject jobDesc){
+    //TODO reverse this to record successful as might remove it when some have failed
+    //and havent got the response yet
+    public static void recordSuccessfulJob(JSONObject jobDesc){
          //assuming the JsonObj has key field mapping which measurement failed
         //TODO mellar needs to provide me with this info
          String key=jobDesc.getString("key");
          for(Job job:activeJobs){
              String currKey=(String)job.getMeasurementDesc().get("key");
              if(currKey.equals(key)){
-                 job.subtractNodeCount();
+                 job.addNodeCount();
                  break;
              }
          }
